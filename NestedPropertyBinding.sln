@@ -1,0 +1,62 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NestedPropertyBinding", "NestedPropertyBinding\NestedPropertyBinding.csproj", "{EFF7E763-A991-40AA-A433-2848827655F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NestedPropertyBindingTests", "NestedPropertyBindingTests\NestedPropertyBindingTests.csproj", "{2EC2A297-2AC7-4047-B0B5-E382A2853771}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestModel", "TestModel\TestModel.csproj", "{2FB94ADA-F77D-49D3-99C2-C8560B0BFEDA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E43F12FD-498D-4B64-A2F3-28F953F120CD}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		License.md = License.md
+		Notice.md = Notice.md
+		ReadMe.md = ReadMe.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NestedBindingSample", "NestedBindingSample\NestedBindingSample.csproj", "{8FA22321-C8BF-4BC6-B26E-004654C29396}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D1FB9B6D-D2F1-4EB8-A2D6-E6D1B351AB80}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug - ChangeEvents|Any CPU = Debug - ChangeEvents|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EFF7E763-A991-40AA-A433-2848827655F3}.Debug - ChangeEvents|Any CPU.ActiveCfg = Debug - ChangeEvents|Any CPU
+		{EFF7E763-A991-40AA-A433-2848827655F3}.Debug - ChangeEvents|Any CPU.Build.0 = Debug - ChangeEvents|Any CPU
+		{EFF7E763-A991-40AA-A433-2848827655F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFF7E763-A991-40AA-A433-2848827655F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFF7E763-A991-40AA-A433-2848827655F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFF7E763-A991-40AA-A433-2848827655F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EC2A297-2AC7-4047-B0B5-E382A2853771}.Debug - ChangeEvents|Any CPU.ActiveCfg = Debug - ChangeEvents|Any CPU
+		{2EC2A297-2AC7-4047-B0B5-E382A2853771}.Debug - ChangeEvents|Any CPU.Build.0 = Debug - ChangeEvents|Any CPU
+		{2EC2A297-2AC7-4047-B0B5-E382A2853771}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EC2A297-2AC7-4047-B0B5-E382A2853771}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EC2A297-2AC7-4047-B0B5-E382A2853771}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EC2A297-2AC7-4047-B0B5-E382A2853771}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FB94ADA-F77D-49D3-99C2-C8560B0BFEDA}.Debug - ChangeEvents|Any CPU.ActiveCfg = Release|Any CPU
+		{2FB94ADA-F77D-49D3-99C2-C8560B0BFEDA}.Debug - ChangeEvents|Any CPU.Build.0 = Release|Any CPU
+		{2FB94ADA-F77D-49D3-99C2-C8560B0BFEDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FB94ADA-F77D-49D3-99C2-C8560B0BFEDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FB94ADA-F77D-49D3-99C2-C8560B0BFEDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FB94ADA-F77D-49D3-99C2-C8560B0BFEDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FA22321-C8BF-4BC6-B26E-004654C29396}.Debug - ChangeEvents|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FA22321-C8BF-4BC6-B26E-004654C29396}.Debug - ChangeEvents|Any CPU.Build.0 = Debug|Any CPU
+		{8FA22321-C8BF-4BC6-B26E-004654C29396}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FA22321-C8BF-4BC6-B26E-004654C29396}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FA22321-C8BF-4BC6-B26E-004654C29396}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FA22321-C8BF-4BC6-B26E-004654C29396}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
