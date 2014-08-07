@@ -8,8 +8,8 @@ using System.Linq;
 namespace NestedPropertyBinding
 {
     /// <summary>
-    /// A helper class which raises <see cref="PropertyChanged"/> events for an object
-    /// and nested properties which implement <see cref="INotifyPropertyChanged"/>.
+    /// A helper class which raises <see cref="PropertyChanged" /> events for an object
+    /// and nested properties which implement <see cref="INotifyPropertyChanged" />.
     /// </summary>
     public class NestedPropertyChangedNotifier<T> : INotifyPropertyChanged
     {
@@ -18,9 +18,9 @@ namespace NestedPropertyBinding
         private Dictionary<string, InnerNotifier> notifiers;
 
         /// <summary>
-        /// Create a new <see cref="NestedPropertyChangeNotifier{T}"/> for type
-        /// T and the given depth of nested properties and assigns the specified
-        /// object for listening and raising PropertyChanged events for.
+        /// Create a new <see cref="NestedPropertyChangeNotifier{T}" /> for type T and the
+        /// given depth of nested properties and assigns the specified object for
+        /// listening and raising PropertyChanged events for.
         /// </summary>
         public NestedPropertyChangedNotifier(T obj, int depth = 1)
             : this(depth)
@@ -29,8 +29,8 @@ namespace NestedPropertyBinding
         }
 
         /// <summary>
-        /// Create a new <see cref="NestedPropertyChangeNotifier{T}"/> for type
-        /// T and the given depth of nested properties.
+        /// Create a new <see cref="NestedPropertyChangeNotifier{T}" /> for type T and the
+        /// given depth of nested properties.
         /// </summary>
         public NestedPropertyChangedNotifier(int depth = 1)
         {
@@ -55,12 +55,12 @@ namespace NestedPropertyBinding
         }
 
         /// <summary>
-        /// Private copy constructor. Used by <see cref="CreateNew"/>.
+        /// Private copy constructor. Used by <see cref="CreateNew" />.
         /// </summary>
         private NestedPropertyChangedNotifier(NestedPropertyChangedNotifier<T> copyFrom, T obj)
         {
             depth = copyFrom.depth;
-            properties = new Dictionary<string,NestedPropertyDescriptor>(copyFrom.properties);
+            properties = new Dictionary<string, NestedPropertyDescriptor>(copyFrom.properties);
             notifiers = new Dictionary<string, InnerNotifier>();
 
             var npcPds = properties.Select(p => p.Value).Where(npd =>
@@ -77,8 +77,9 @@ namespace NestedPropertyBinding
 
             Object = obj;
         }
-        
+
         private T _object;
+
         /// <summary>
         /// The object to raise <see cref="PropertyChanged" /> events for.
         /// </summary>
@@ -101,7 +102,7 @@ namespace NestedPropertyBinding
                     {
                         npc.PropertyChanged += NestedPropertyChanged;
                     }
-                    
+
                     UpdateNotifiers();
                 }
             }
@@ -119,6 +120,7 @@ namespace NestedPropertyBinding
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         protected void OnPropertyChanged(string name)
         {
             if (PropertyChanged != null)
@@ -142,7 +144,7 @@ namespace NestedPropertyBinding
         }
 
         /// <summary>
-        /// After the <see cref="Object"/> is set update all notifiers.
+        /// After the <see cref="Object" /> is set update all notifiers.
         /// </summary>
         private void UpdateNotifiers()
         {
@@ -153,7 +155,7 @@ namespace NestedPropertyBinding
         }
 
         /// <summary>
-        /// After a property changes then update all nested notifiers which will have changed. 
+        /// After a property changes then update all nested notifiers which will have changed.
         /// </summary>
         private void UpdateNotifiers(string PropertyName)
         {
@@ -164,8 +166,8 @@ namespace NestedPropertyBinding
         }
 
         /// <summary>
-        /// Class to wrap each nested INotifyPropertyChanged object and
-        /// raise PropertyChanged events using nested property names.
+        /// Class to wrap each nested INotifyPropertyChanged object and raise
+        /// PropertyChanged events using nested property names.
         /// </summary>
         private class InnerNotifier
         {
@@ -180,6 +182,7 @@ namespace NestedPropertyBinding
             internal PropertyDescriptor Property { get; private set; }
 
             private object _object;
+
             internal object Object
             {
                 get { return _object; }
@@ -207,12 +210,13 @@ namespace NestedPropertyBinding
                 Object = Property.GetValue(component);
             }
 
-            void Object_PropertyChanged(object sender, PropertyChangedEventArgs e)
+            private void Object_PropertyChanged(object sender, PropertyChangedEventArgs e)
             {
                 OnPropertyChanged(string.Format("{0}.{1}", Property.Name, e.PropertyName));
             }
 
             internal event PropertyChangedEventHandler PropertyChanged;
+
             internal void OnPropertyChanged(string name)
             {
                 if (PropertyChanged != null)
@@ -220,7 +224,6 @@ namespace NestedPropertyBinding
                     PropertyChanged(this, new PropertyChangedEventArgs(name));
                 }
             }
-
         }
     }
 }

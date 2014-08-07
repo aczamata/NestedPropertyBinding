@@ -28,12 +28,13 @@ namespace NestedPropertyBinding.Tests
                                    () => p.Address = new Address());
             Assert.PropertyChanged(notifier,
                                    "Address.City",
-                                   () => p.Address.City = new City());             
+                                   () => p.Address.City = new City());
         }
 
         private class NoNotify
         {
             public Person Person { get; set; }
+
             public string Blah { get; set; }
         }
 

@@ -9,6 +9,7 @@ namespace TestModel
     public class Person : INotifyPropertyChanged
     {
         private int _ID;
+
         public int ID
         {
             get { return _ID; }
@@ -20,6 +21,7 @@ namespace TestModel
         }
 
         private string _Name;
+
         public string Name
         {
             get { return _Name; }
@@ -31,6 +33,7 @@ namespace TestModel
         }
 
         private Address _Address;
+
         public Address Address
         {
             get { return _Address; }
@@ -42,6 +45,7 @@ namespace TestModel
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         protected void OnPropertyChanged([CallerMemberName] string name = "")
         {
             if (PropertyChanged != null)

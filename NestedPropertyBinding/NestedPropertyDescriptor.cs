@@ -24,12 +24,14 @@ namespace NestedPropertyBinding
         }
 
         /// <summary>
-        /// A <see cref="System.ComponentModel.PropertyDescriptor"/> for nested properties.
-        /// That is for properties of properties.
+        /// A <see cref="System.ComponentModel.PropertyDescriptor" /> for nested
+        /// properties. That is for properties of properties.
         /// </summary>
         /// <param name="type">The component type for which the nested property belongs.</param>
-        /// <param name="propertyName">The nested property name specified using dot notation.
-        /// This should not contain the name of component itself.</param>
+        /// <param name="propertyName">
+        /// The nested property name specified using dot notation. This should not contain
+        /// the name of component itself.
+        /// </param>
         public NestedPropertyDescriptor(Type type, string propertyName)
             : base(Check.NotEmpty(propertyName, "propertyName"), null)
         {
@@ -77,9 +79,10 @@ namespace NestedPropertyBinding
         }
 
         private int _Depth = -1;
+
         /// <summary>
-        /// The property's depth from the component.
-        /// Properties directly on an component have a depth of 0.
+        /// The property's depth from the component. Properties directly on an component
+        /// have a depth of 0.
         /// </summary>
         public int PropertyDepth
         {
@@ -102,7 +105,7 @@ namespace NestedPropertyBinding
             get { return _currentPD.PropertyType; }
         }
 
-        #endregion
+        #endregion Properties
 
         #region Methods
 
@@ -113,7 +116,7 @@ namespace NestedPropertyBinding
 
             return _currentPD.CanResetValue(component);
         }
-        
+
         public override object GetValue(object component)
         {
             if (_parentPD != null)
@@ -187,7 +190,7 @@ namespace NestedPropertyBinding
             }
         }
 
-        #endregion
+        #endregion Methods
 
 #if SupportChangeEvents
         // Support for external change events

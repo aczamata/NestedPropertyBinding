@@ -19,28 +19,29 @@ namespace NestedPropertyBinding
     {
         #region Private fields
 
-        bool allow_edit = true;
-        bool allow_remove = true;
-        bool allow_new;
-        bool allow_new_set;
+        private bool allow_edit = true;
+        private bool allow_remove = true;
+        private bool allow_new;
+        private bool allow_new_set;
 
-        bool raise_list_changed_events = true;
+        private bool raise_list_changed_events = true;
 
-        bool type_has_default_ctor;
-        bool type_raises_item_changed_events;
+        private bool type_has_default_ctor;
+        private bool type_raises_item_changed_events;
 
-        bool add_pending;
-        int pending_add_index;
+        private bool add_pending;
+        private int pending_add_index;
 
-        List<T> inner_list;
-        NestedPropertyChangedNotifier<T> notifier_default;
-        Dictionary<T, NestedPropertyChangedNotifier<T>> notifiers;
+        private List<T> inner_list;
+        private NestedPropertyChangedNotifier<T> notifier_default;
+        private Dictionary<T, NestedPropertyChangedNotifier<T>> notifiers;
 
-        #endregion
-        
+        #endregion Private fields
+
         #region Constructors
 
-        public NestedBindingList(int depth = 1) : this(new List<T>(), depth)
+        public NestedBindingList(int depth = 1)
+            : this(new List<T>(), depth)
         {
         }
 
@@ -53,7 +54,7 @@ namespace NestedPropertyBinding
             Initialise();
         }
 
-        void Initialise()
+        private void Initialise()
         {
             ConstructorInfo ci = typeof(T).GetConstructor(Type.EmptyTypes);
             type_has_default_ctor = (ci != null);
@@ -66,7 +67,7 @@ namespace NestedPropertyBinding
             }
         }
 
-        #endregion
+        #endregion Constructors
 
         #region Properties
 
@@ -106,10 +107,9 @@ namespace NestedPropertyBinding
             }
             set
             {
-                // this funky check (using AllowNew instead of allow_new allows
-                // us to keep the logic for the 3 cases in one place (the getter)
-                // instead of spreading them around the file (in the ctor, in the
-                // AddingNew add handler, etc.
+                // this funky check (using AllowNew instead of allow_new allows us to keep
+                // the logic for the 3 cases in one place (the getter) instead of spreading
+                // them around the file (in the ctor, in the AddingNew add handler, etc).
                 if (AllowNew != value)
                 {
                     allow_new_set = true;
@@ -146,8 +146,9 @@ namespace NestedPropertyBinding
         }
 
         private PropertyDescriptorCollection _ItemProperties;
+
         /// <summary>
-        /// Gets a <see cref="PropertyDescriptorCollection"/> for the object properties which may be bound to. 
+        /// Gets a <see cref="PropertyDescriptorCollection"/> for the object properties which may be bound to.
         /// </summary>
         public PropertyDescriptorCollection ItemProperties
         {
@@ -167,10 +168,10 @@ namespace NestedPropertyBinding
         }
 
         private int _bindingDepth = 0;
+
         /// <summary>
-        /// The depth for which nested properties can be bound to.
-        /// A depth of 0 indicates to only use the properties directly
-        /// on the object with no nested properties.
+        /// The depth for which nested properties can be bound to. A depth of 0 indicates
+        /// to only use the properties directly on the object with no nested properties.
         /// </summary>
         public int PropertyBindingDepth
         {
@@ -226,9 +227,11 @@ namespace NestedPropertyBinding
         {
             get { return true; }
         }
-        #endregion
+
+        #endregion Properties
 
         public event AddingNewEventHandler AddingNew;
+
         public event ListChangedEventHandler ListChanged;
 
         #region Methods
@@ -318,7 +321,7 @@ namespace NestedPropertyBinding
             SortProperty = null;
         }
 
-        #endregion
+        #endregion Public methods
 
         #region Protected Methods
 
@@ -338,7 +341,7 @@ namespace NestedPropertyBinding
                 ListChanged(this, e);
         }
 
-        #endregion
+        #endregion Protected Methods
 
         #region Private methods
 
@@ -404,7 +407,7 @@ namespace NestedPropertyBinding
             notifiers.Remove(item);
         }
 
-        #endregion
+        #endregion Private methods
 
         #region Overrides
 
@@ -423,10 +426,10 @@ namespace NestedPropertyBinding
             OnListChanged(new ListChangedEventArgs(ListChangedType.Reset, -1));
         }
 
-         /// <summary>
-         /// Insert an item into the list.  If the list is sorted then the actual
-         /// index of the inserted item may differ from that specified.
-         /// </summary>
+        /// <summary>
+        /// Insert an item into the list. If the list is sorted then the actual index of
+        /// the inserted item may differ from that specified.
+        /// </summary>
         protected override void InsertItem(int index, T item)
         {
             EndNew(pending_add_index);
@@ -476,9 +479,9 @@ namespace NestedPropertyBinding
             OnListChanged(new ListChangedEventArgs(ListChangedType.ItemChanged, index));
         }
 
-        #endregion
+        #endregion Overrides
 
-        #endregion
+        #endregion Methods
 
         #region Explicit interface implementations
 
@@ -497,7 +500,6 @@ namespace NestedPropertyBinding
             /* no implementation */
         }
 
-        #endregion
+        #endregion Explicit interface implementations
     }
 }
-

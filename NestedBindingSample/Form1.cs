@@ -9,7 +9,7 @@ namespace NestedBindingSample
 {
     public partial class Form1 : Form
     {
-        NestedBindingList<Person> list;
+        private NestedBindingList<Person> list;
 
         public Form1()
         {

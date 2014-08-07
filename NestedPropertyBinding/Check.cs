@@ -7,8 +7,8 @@ using System.Diagnostics;
 namespace NestedPropertyBinding
 {
     /// <summary>
-    /// Helper class for checking method arguments.  The Checks can all be used inline
-    /// in order to allow checking of arguments before passing to another constructor.
+    /// Helper class for checking method arguments. The Checks can all be used inline in
+    /// order to allow checking of arguments before passing to another constructor.
     /// </summary>
     internal class Check
     {
@@ -73,7 +73,7 @@ namespace NestedPropertyBinding
         public static string NotEmpty(string value, string argName)
         {
             if (string.IsNullOrWhiteSpace(value))
-            {            
+            {
 #if DEBUG
                 Debug.Fail(string.Format("Argument null or whitespace: {0}", argName));
 #else
@@ -118,12 +118,11 @@ namespace NestedPropertyBinding
     }
 
     /// <summary>
-    /// DebugCheck wraps the <see cref="Check"/> class but will only
-    /// perform the check when the DEBUG symbol is defined.
+    /// DebugCheck wraps the <see cref="Check" /> class but will only perform the check
+    /// when the DEBUG symbol is defined.
     /// </summary>
     internal class DebugCheck
     {
-
         public static T True<T>(T value, string argName, Func<T, bool> check) where T : class
         {
 #if DEBUG

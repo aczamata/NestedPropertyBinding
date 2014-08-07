@@ -9,6 +9,7 @@ namespace TestModel
     public class City : INotifyPropertyChanged
     {
         private string _Name;
+
         public string Name
         {
             get { return _Name; }
@@ -20,6 +21,7 @@ namespace TestModel
         }
 
         private State _State;
+
         public State State
         {
             get { return _State; }
@@ -31,6 +33,7 @@ namespace TestModel
         }
 
         private string _PostCode;
+
         public string PostCode
         {
             get { return _PostCode; }
@@ -42,6 +45,7 @@ namespace TestModel
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         protected void OnPropertyChanged([CallerMemberName] string name = "")
         {
             if (PropertyChanged != null)

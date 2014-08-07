@@ -93,7 +93,7 @@ namespace NestedPropertyBinding.Tests
             list.Add(new Person() { Name = "Bill" });
 
             Assert.Null(list[0].Name);
-            
+
             // Sort the list on Name
             var pd = list.ItemProperties.Find("Name", false);
             Assert.NotNull(pd);

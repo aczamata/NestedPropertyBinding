@@ -12,7 +12,7 @@ using System.Xml.Linq;
 namespace NestedPropertyBinding
 {
     // <summary>
-    // Implements comparing for the <see cref="NestedBindingList{T}" /> implementation.
+    // Implements comparing for the <see cref="NestedBindingList{T}" /> class.
     // </summary>
     internal class PropertyComparer<T> : Comparer<T>
     {
@@ -22,11 +22,11 @@ namespace NestedPropertyBinding
         private readonly bool _useToString;
 
         // <summary>
-        // Initializes a new instance of the <see cref="SortableBindingList{T}.PropertyComparer" /> class
-        // for sorting the list.
+        // Initializes a new instance of the <see
+        // cref="SortableBindingList{T}.PropertyComparer" /> class for sorting the list.
         // </summary>
-        // <param name="prop"> The property to sort by. </param>
-        // <param name="direction"> The sort direction. </param>
+        // <param name="prop">The property to sort by.</param>
+        // <param name="direction">The sort direction.</param>
         public PropertyComparer(PropertyDescriptor prop, ListSortDirection direction)
         {
             if (!prop.ComponentType.IsAssignableFrom(typeof(T)))
@@ -59,8 +59,8 @@ namespace NestedPropertyBinding
         // <summary>
         // Compares two instances of items in the list.
         // </summary>
-        // <param name="left"> The left item to compare. </param>
-        // <param name="right"> The right item to compare. </param>
+        // <param name="left">The left item to compare.</param>
+        // <param name="right">The right item to compare.</param>
         public override int Compare(T left, T right)
         {
             var leftValue = _prop.GetValue(left);
@@ -80,7 +80,7 @@ namespace NestedPropertyBinding
         // <summary>
         // Determines whether this instance can sort for the specified type.
         // </summary>
-        // <param name="type"> The type. </param>
+        // <param name="type">The type.</param>
         // <returns>
         // <c>true</c> if this instance can sort for the specified type; otherwise, <c>false</c> .
         // </returns>
@@ -92,7 +92,7 @@ namespace NestedPropertyBinding
         // <summary>
         // Determines whether this instance can sort for the specified type using IComparable.
         // </summary>
-        // <param name="type"> The type. </param>
+        // <param name="type">The type.</param>
         // <returns>
         // <c>true</c> if this instance can sort for the specified type; otherwise, <c>false</c> .
         // </returns>
@@ -105,7 +105,7 @@ namespace NestedPropertyBinding
         // <summary>
         // Determines whether this instance can sort for the specified type using ToString.
         // </summary>
-        // <param name="type"> The type. </param>
+        // <param name="type">The type.</param>
         // <returns>
         // <c>true</c> if this instance can sort for the specified type; otherwise, <c>false</c> .
         // </returns>

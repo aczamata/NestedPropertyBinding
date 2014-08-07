@@ -9,6 +9,7 @@ namespace TestModel
     public class Address : INotifyPropertyChanged
     {
         private string _Street;
+
         public string Street
         {
             get { return _Street; }
@@ -20,6 +21,7 @@ namespace TestModel
         }
 
         private City _City;
+
         public City City
         {
             get { return _City; }
@@ -31,6 +33,7 @@ namespace TestModel
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         protected void OnPropertyChanged([CallerMemberName] string name = "")
         {
             if (PropertyChanged != null)

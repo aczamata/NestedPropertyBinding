@@ -130,6 +130,7 @@ namespace NestedPropertyBinding.Tests
             Assert.False(raised);
         }
 #else
+
         /// <summary>
         /// Note: This is also probably wrong.
         /// A handler can be added whether all objects in the tree are null or not.
@@ -180,6 +181,7 @@ namespace NestedPropertyBinding.Tests
             pd.SetValue(p, "No Blah");
             Assert.True(raised);
         }
+
 #endif
     }
 }
