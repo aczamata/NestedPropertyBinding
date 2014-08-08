@@ -29,6 +29,7 @@ namespace NestedPropertyBinding
         private bool type_has_default_ctor;
         private bool type_raises_item_changed_events;
 
+        private bool adding_new;
         private bool add_pending;
         private int pending_add_index;
 
@@ -256,8 +257,12 @@ namespace NestedPropertyBinding
                 new_obj = (T)Activator.CreateInstance(typeof(T));
             }
 
+            adding_new = true;
+
             // Add the item to the base list
             Add(new_obj);
+
+            adding_new = false;
 
             pending_add_index = IndexOf(new_obj);
             add_pending = true;
@@ -321,6 +326,20 @@ namespace NestedPropertyBinding
             SortProperty = null;
         }
 
+        /// <summary>
+        /// Set the <see cref="SortProperty"/> and <see cref="SortDirection"/>
+        /// which the list will be sorted by.
+        /// </summary>
+        public void SortBy(string propName, bool ignoreCase = false, bool ascending = true)
+        {
+            Check.NotEmpty(propName, "propName");
+
+            var pd = ItemProperties.Find(propName, ignoreCase);
+            Debug.Assert(pd != null);
+
+            ApplySort(pd, ascending ? ListSortDirection.Ascending : ListSortDirection.Descending);
+        }
+
         #endregion Public methods
 
         #region Protected Methods
@@ -334,8 +353,11 @@ namespace NestedPropertyBinding
         protected virtual void OnListChanged(ListChangedEventArgs e)
         {
             // If an item is changed then sort the list
-            if (!add_pending && IsSorted && e.ListChangedType == ListChangedType.ItemChanged)
+            if (!add_pending && IsSorted && e.ListChangedType == ListChangedType.ItemChanged
+                && (e.PropertyDescriptor == null || e.PropertyDescriptor == SortProperty))
+            {
                 ApplySort(SortProperty, SortDirection);
+            }
 
             if (ListChanged != null)
                 ListChanged(this, e);
@@ -436,7 +458,7 @@ namespace NestedPropertyBinding
 
             base.InsertItem(index, item);
 
-            if (IsSorted)
+            if (IsSorted && !adding_new)
             {
                 ApplySort(SortProperty, SortDirection);
                 index = inner_list.IndexOf(item);

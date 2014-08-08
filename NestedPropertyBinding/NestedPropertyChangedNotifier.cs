@@ -34,7 +34,7 @@ namespace NestedPropertyBinding
         /// </summary>
         public NestedPropertyChangedNotifier(int depth = 1)
         {
-            //Debug.Assert(typeof(INotifyPropertyChanged).IsAssignableFrom(typeof(T)));
+            CascadeNotifications = true;
 
             this.depth = depth;
             var pds = NestedPropertyDescriptor.GetNestedProperties(typeof(T), depth);
@@ -59,6 +59,7 @@ namespace NestedPropertyBinding
         /// </summary>
         private NestedPropertyChangedNotifier(NestedPropertyChangedNotifier<T> copyFrom, T obj)
         {
+            CascadeNotifications = copyFrom.CascadeNotifications;
             depth = copyFrom.depth;
             properties = new Dictionary<string, NestedPropertyDescriptor>(copyFrom.properties);
             notifiers = new Dictionary<string, InnerNotifier>();

@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using TestModel;
 using Xunit;
 
@@ -92,35 +93,53 @@ namespace NestedPropertyBinding.Tests
             list.Add(new Person() { Name = "Fred" });
             list.Add(new Person() { Name = "Bill" });
 
-            Assert.Null(list[0].Name);
+            Assert.True(list.Select(f => f.Name)
+                            .SequenceEqual(new string[] { null, "Fred", "Bill" }));
 
             // Sort the list on Name
-            var pd = list.ItemProperties.Find("Name", false);
-            Assert.NotNull(pd);
-            list.ApplySort(pd, ListSortDirection.Ascending);
-
-            Assert.Equal("Bill", list[1].Name);
+            list.SortBy("Name");
+            Assert.True(list.Select(f => f.Name)
+                            .SequenceEqual(new string[] { null, "Bill", "Fred" }));
 
             // Adding a new item will sort the list
             list.Add(new Person() { Name = "Abigale" });
-            Assert.Equal("Abigale", list[1].Name);
+            Assert.True(list.Select(f => f.Name)
+                            .SequenceEqual(new string[] { null, "Abigale", "Bill", "Fred" }));
+
+            // Using AddNew will add a new item to the end of the list and won't sort
+            var item = list.AddNew();
+            Assert.Same(list[4], item);
+
+            // Modifying the new item also won't sort the list
+            item.Name = "Emily";
+            Assert.Same(list[4], item);
+
+            // Calling EndNew will sort
+            list.EndNew(4);
+            Assert.True(list.Select(f => f.Name)
+                            .SequenceEqual(new string[] { null, "Abigale", "Bill", "Emily", "Fred" }));
 
             // Removing the sort leaves things where they were
             list.RemoveSort();
-            Assert.Equal("Abigale", list[1].Name);
+            Assert.True(list.Select(f => f.Name)
+                            .SequenceEqual(new string[] { null, "Abigale", "Bill", "Emily", "Fred" }));
 
-            // Sort the list on a nested property which has
-            // intermediate null values in the list
-            pd = list.ItemProperties.Find("Address.City.Name", false);
-            Assert.NotNull(pd);
-            list.ApplySort(pd, ListSortDirection.Descending);
+            // Sort the list on a nested property which has some
+            // intermediate null values in the list - descending
+            item = list[3];
+            item.Address = new Address() { City = new City() { Name = "Brisbane" } };
+            list.SortBy("Address.City.Name", false, false);
+            Assert.Same(item, list[0]);
 
-            // Set nested properties will sort with null values last
-            list[3].Address = new Address() { City = new City() { Name = "Blah" } };
-            Assert.Equal("Fred", list[0].Name);
+            // Setting nested properties will sort
+            item = list[3];
+            item.Address = new Address() { City = new City() { Name = "Melbourne" } };
+            Assert.Same(item, list[0]);
 
-            list[3].Address = new Address() { City = new City() { Name = "Kablah" } };
-            Assert.Equal("Bill", list[0].Name);
+            // Adding a new item will sort on the nested property
+            item = new Person() { Name = "Gertrude", Address = new Address() { City = new City() { Name = "Perth" } } };
+            list.Add(item);
+            Assert.Same(item, list[0]);
         }
     }
 }
