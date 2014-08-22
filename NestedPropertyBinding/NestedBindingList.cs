@@ -13,7 +13,7 @@ using System.Reflection;
 
 namespace NestedPropertyBinding
 {
-    [SerializableAttribute]
+    [Serializable]
     public class NestedBindingList<T> : Collection<T>,
         IBindingList, ICancelAddNew, IRaiseItemChangedEvents, ITypedList
     {
@@ -186,7 +186,10 @@ namespace NestedPropertyBinding
 
                     _bindingDepth = value;
                     _ItemProperties = null;
-                    notifier_default = new NestedPropertyChangedNotifier<T>(PropertyBindingDepth);
+                    notifier_default = null;
+
+                    // Update the notifiers
+                    UpdateNotifiers();
 
                     OnListChanged(new ListChangedEventArgs(ListChangedType.Reset, -1));
                 }
@@ -425,7 +428,7 @@ namespace NestedPropertyBinding
             Debug.Assert(notifiers.Keys.Contains(item));
 
             var notifier = notifiers[item];
-            notifier.PropertyChanged += Item_PropertyChanged;
+            notifier.PropertyChanged -= Item_PropertyChanged;
             notifiers.Remove(item);
         }
 

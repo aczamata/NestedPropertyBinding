@@ -21,14 +21,17 @@ namespace NestedPropertyBinding.Tests
             // Listen for change events
             var raised = false;
             ListChangedType change = default(ListChangedType);
+            string propname = null;
             list.ListChanged += (s, a) =>
                                 {
                                     raised = true;
                                     change = a.ListChangedType;
+                                    if (a.PropertyDescriptor != null)
+                                        propname = a.PropertyDescriptor.Name;
                                 };
 
             // Add a new item
-            var p = new Person();
+            var p = new Person() { Address = new Address() };
             list.Add(p);
             Assert.True(raised);
             Assert.Equal(ListChangedType.ItemAdded, change);
@@ -38,13 +41,17 @@ namespace NestedPropertyBinding.Tests
             p.Name = "Fred";
             Assert.True(raised);
             Assert.Equal(ListChangedType.ItemChanged, change);
+            Assert.Equal("Name", propname);
             raised = false;
+            propname = null;
 
             // Set nested properties
-            p.Address = new Address() { City = new City() };
+            p.Address.City = new City();
             Assert.True(raised);
             Assert.Equal(ListChangedType.ItemChanged, change);
+            Assert.Equal("Address.City", propname);
             raised = false;
+            propname = null;
 
             // Set a nested property deeper than the PropertyBindingDepth
             p.Address.City.Name = "Blahville";
@@ -54,6 +61,66 @@ namespace NestedPropertyBinding.Tests
             list.Remove(p);
             Assert.True(raised);
             Assert.Equal(ListChangedType.ItemDeleted, change);
+            raised = false;
+
+            // Changing a property on the removed item won't raise event
+            p.Name = "Fredrick";
+            Assert.False(raised);
+
+            // Add a few new items
+            list.Add(new Person() { Address = new Address() { City = new City() } });
+            list.Add(new Person());
+            list.Add(null); // Null value
+            raised = false;
+
+            // Change the PropertyBindingDepth
+            list.PropertyBindingDepth = 0;
+            Assert.True(raised);
+            Assert.Equal(ListChangedType.Reset, change);
+            raised = false;
+
+            // Change a property and make sure it still raises the event
+            list[0].Name = "Bill";
+            Assert.True(raised);
+            Assert.Equal(ListChangedType.ItemChanged, change);
+            Assert.Equal("Name", propname);
+            raised = false;
+            propname = null;
+
+            // Set a nested property deeper than the new PropertyBindingDepth
+            // but within the old depth shouldn't raise the event
+            list[0].Address.Street = "23 Foo Ave";
+            Assert.False(raised);
+
+            // Remove a null value
+            list.RemoveAt(2);
+            Assert.True(raised);
+            Assert.Equal(ListChangedType.ItemDeleted, change);
+            raised = false;
+
+            // Replace a value
+            p = list[1];
+            list[1] = new Person();
+            Assert.True(raised);
+            Assert.Equal(ListChangedType.ItemChanged, change);
+            raised = false;
+
+            // Old item doesn't raise events
+            p.Name = "Bob";
+            Assert.False(raised);
+
+            // New item does
+            list[1].Name = "Sherrie";
+            Assert.True(raised);
+            Assert.Equal(ListChangedType.ItemChanged, change);
+            Assert.Equal("Name", propname);
+            raised = false;
+            propname = null;
+
+            // Clear the list
+            list.Clear();
+            Assert.True(raised);
+            Assert.Equal(ListChangedType.Reset, change);
         }
 
         [Fact()]
